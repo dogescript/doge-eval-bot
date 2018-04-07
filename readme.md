@@ -18,3 +18,5 @@ The bot uses the `@slack/client` module to post notifications to the channel whe
   - add limit on log lines to 20 (/)
 - configure travis to deploy on master build
   - add hook to rebuild doge-eval-bot with latest dogescript
+  - notify on redeploy with commit hash
+- notify on wakeup (post to dogebot-devel with timestamp)
