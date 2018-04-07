@@ -164,14 +164,15 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
 
     var context = vm.createContext();
     var script = new vm.Script(jsCode, {
-      timeout: 1000, //ms
-      console: vmConsole,
-      filename: 'scripty.js'
+      timeout: 2000, //ms
+      console: vmConsole
     });
 
     console.time('vmExec');
     script.runInContext(context);
     console.timeEnd('vmExec');
+
+    console.log('messages:' + vmConsole.logMessages());
 
     var formatted = backTicks + "\n" + vmConsole.logMessages().map(s => ':> '+s).join("\n") + "\n" + backTicks;
 
