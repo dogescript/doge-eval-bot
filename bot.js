@@ -124,19 +124,10 @@ require("./skills/" + file)(controller);
 // If a trigger is matched, the conversation will automatically fire!
 // You can tie into the execution of the script using the functions
 // controller.studio.before, controller.studio.after and controller.studio.validate
-
-console.log('~~~~~~~~~~');
-console.log('NOTE: Botkit Studio functionality has not been enabled');
-console.log('To enable, pass in a studio_token parameter with a token from https://studio.botkit.ai/');
-
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:' + message.text);
+  bot.reply(message, 'Got it!');
 });
-
-
-
-
-
 
 
 function usage_tip() {
