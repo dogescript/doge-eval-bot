@@ -162,19 +162,25 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
     var vmConsole = new VMConsole();
     var jsCode = dogescript(parsed);
     console.log('exec:\n' + jsCode);
-    var context = vm.createContext();
-    var script = new vm.Script(jsCode, {
-      timeout: 2000, //ms
+
+    var options = {
+        timeout: 2000 //ms
+    };
+
+    var sandbox = {
       console: vmConsole
-    });
+    };
 
     console.time('vmExec');
-    script.runInContext(context);
+    var result = vm.runInNewContext(jsCode,sandbox,options);
     console.timeEnd('vmExec');
+
+
+    script.runInContext(context);
 
     console.log('messages:' + vmConsole.logMessages());
 
-    var formatted = backTicks + "\n" + vmConsole.logMessages().map(s => ':> '+s).join("\n") + "\n" + backTicks;
+    var formatted = backTicks + "\n" + vmConsole.logMessages().map(s => ':> '+s).join("\n") + "\n" + result + +"\n"+ backTicks;
 
     // todo get the result
     bot.reply(message, formatted);
