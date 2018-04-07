@@ -166,7 +166,10 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
         timeout: 5000
       }
     );
-    bot.reply(message, vmConsole.logMessages());
+
+    var formatted = backTicks + "\n" + vmConsole.logMessages().map(s => ':> '+s).join("\n") + "\n" + backTicks;
+    // todo get the result
+    bot.reply(message, formatted);
   }
 
 
