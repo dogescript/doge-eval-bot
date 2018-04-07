@@ -128,12 +128,13 @@ require("./skills/" + file)(controller);
 // controller.studio.before, controller.studio.after and controller.studio.validate
 
 var codeParser = require("./lib/code_parser.js");
-require("./lib/vm_console.js");
+var VMConsole = require("./lib/vm_console.js");
 
 const vm = require('vm');
 
 var dogescript = require('dogescript');
 
+new VMConsole();
 
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:' + message.text);
