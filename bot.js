@@ -161,7 +161,7 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
 
     var vmConsole = new VMConsole();
     var jsCode = dogescript(parsed);
-
+    console.log('exec:\n' + jsCode);
     var context = vm.createContext();
     var script = new vm.Script(jsCode, {
       timeout: 2000, //ms
