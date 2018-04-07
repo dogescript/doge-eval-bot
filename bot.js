@@ -127,18 +127,39 @@ require("./skills/" + file)(controller);
 // You can tie into the execution of the script using the functions
 // controller.studio.before, controller.studio.after and controller.studio.validate
 
-var codeParser = require("./lib/code_parser.js")
+var codeParser = require("./lib/code_parser.js");
+require("./lib/vm_console.js");
+
+const vm = require('vm');
+
+var dogescript = require('dogescript');
+
+
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:' + message.text);
 
   var parsed = codeParser.parseMessage(message.text);
 
+  var vmConsole = VMConsole();
   var replyMsg = 'plz provide code block!';
-  if(parsed !== '')
+  if(parsed === '')
   {
-    replyMsg = parsed;
+    bot.reply(message, 'plz provide code block!');
   }
-  bot.reply(message, replyMsg);
+  else {
+    var jsCode = dogescript.parse(parsed);
+    vm.runInNewContext(jsCode,
+      {
+        console: vmConsole,
+        timeout: 5000
+      }
+    );
+    bot.reply(message, vmConsole.logMessages());
+  }
+
+
+
+
 });
 
 
