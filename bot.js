@@ -161,13 +161,17 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
   }
   else {
     var jsCode = dogescript(parsed);
+
+    console.log('evaluating: ' + jsCode);
+    console.time();
     vm.runInNewContext(jsCode,
       {
         console: vmConsole,
         timeout: 5000
       }
     );
-
+    console.timeEnd();
+    
     var formatted = backTicks + "\n" + vmConsole.logMessages().map(s => ':> '+s).join("\n") + "\n" + backTicks;
     // todo get the result
     bot.reply(message, formatted);
