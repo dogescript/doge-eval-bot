@@ -132,6 +132,7 @@ var VMConsole = require("./lib/vm_console.js");
 
 const vm = require('vm');
 const dogescript = require('dogescript');
+const backTicks = "\`\`\`"
 
 // console.log(dogescript);
 //
