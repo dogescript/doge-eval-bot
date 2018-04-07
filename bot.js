@@ -131,9 +131,6 @@ var codeParser = require("./lib/code_parser.js")
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:' + message.text);
 
- // parse out code
- console.log('parsed:'+ codeParser.parse(message.text));
-
   var parsed = codeParser.parseMessage(message.text);
 
   var replyMsg = 'plz provide code block!';
