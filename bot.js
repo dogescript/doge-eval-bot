@@ -152,9 +152,6 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:\n' + message.text);
 
   var parsed = codeParser.parseMessage(message.text);
-
-  var vmConsole = new VMConsole();
-  var replyMsg = 'plz provide code block!';
   if(parsed === '')
   {
     bot.reply(message, 'plz provide code block!');
@@ -162,23 +159,25 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
   else
   {
 
+    var vmConsole = new VMConsole();
     var jsCode = dogescript(parsed);
 
-    console.log('evaluating:\n' + jsCode);
-    vm.runInNewContext(jsCode,
-      {
-        console: vmConsole,
-        timeout: 5000
-      }
-    );
+    var context = vm.createContext();
+    var script = new vm.Script(jsCode, {
+      timeout: 1000, //ms
+      console: vmConsole,
+      filename: 'scripty.js'
+    });
+
+    console.time('vmExec');
+    script.runInContext(context);
+    console.timeEnd('vmExec');
 
     var formatted = backTicks + "\n" + vmConsole.logMessages().map(s => ':> '+s).join("\n") + "\n" + backTicks;
+
     // todo get the result
     bot.reply(message, formatted);
   }
-
-
-
 
 });
 
