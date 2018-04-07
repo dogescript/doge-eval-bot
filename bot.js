@@ -149,7 +149,7 @@ const backTicks = "\`\`\`"
 // console.log(vmc.logMessages());
 
 controller.on('direct_message,direct_mention,mention', function(bot, message){
-  console.log('got:' + message.text);
+  console.log('got:\n' + message.text);
 
   var parsed = codeParser.parseMessage(message.text);
 
@@ -159,19 +159,19 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
   {
     bot.reply(message, 'plz provide code block!');
   }
-  else {
+  else
+  {
+
     var jsCode = dogescript(parsed);
 
-    console.log('evaluating: ' + jsCode);
-    console.time();
+    console.log('evaluating:\n' + jsCode);
     vm.runInNewContext(jsCode,
       {
         console: vmConsole,
         timeout: 5000
       }
     );
-    console.timeEnd();
-    
+
     var formatted = backTicks + "\n" + vmConsole.logMessages().map(s => ':> '+s).join("\n") + "\n" + backTicks;
     // todo get the result
     bot.reply(message, formatted);

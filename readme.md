@@ -11,10 +11,10 @@ The bot uses the `@slack/client` module to post notifications to the channel whe
 
 ## TODOS
 
-- parse code as dogescript
-- eval dogescript in vm
-  - perhaps intercept console
-  - add timeout so things don't crash
-  - add limit on log lines to 20
+- parse code as dogescript (/)
+- eval dogescript in vm (/)
+  - perhaps intercept console (/)
+  - add timeout so things don't crash (still timing out forever and not coming back)
+  - add limit on log lines to 20 (/)
 - configure travis to deploy on master build
   - add hook to rebuild doge-eval-bot with latest dogescript
