@@ -131,10 +131,21 @@ var codeParser = require("./lib/code_parser.js");
 var VMConsole = require("./lib/vm_console.js");
 
 const vm = require('vm');
+const dogescript = require('dogescript');
 
-var dogescript = require('dogescript');
-
-new VMConsole();
+// console.log(dogescript);
+//
+// var dsParsed = dogescript('plz console.loge with \'doge\'');
+// console.log(dsParsed);
+//
+// var vmc = new VMConsole();
+// vm.runInNewContext(dsParsed,
+//   {
+//     console: vmc,
+//     timeout: 5000
+//   }
+// );
+// console.log(vmc.logMessages());
 
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:' + message.text);
@@ -148,7 +159,7 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
     bot.reply(message, 'plz provide code block!');
   }
   else {
-    var jsCode = dogescript.parse(parsed);
+    var jsCode = dogescript(parsed);
     vm.runInNewContext(jsCode,
       {
         console: vmConsole,
