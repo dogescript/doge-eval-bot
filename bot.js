@@ -51,10 +51,13 @@ This bot demonstrates many of the core features of Botkit:
     -> http://howdy.ai/botkit
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-var env = require('node-env-file');
-env(__dirname + '/.env');
+var dotenv = require('dotenv');
+//load environment variables,
+//either from .env files (development),
+//heroku environment in production, etc...
+dotenv.load();
 
-
+console.log('id:' + process.env.clientId)
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
   usage_tip();
   // process.exit(1);
