@@ -52,12 +52,12 @@ This bot demonstrates many of the core features of Botkit:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 var dotenv = require('dotenv');
+
 //load environment variables,
 //either from .env files (development),
 //heroku environment in production, etc...
 dotenv.load();
 
-console.log('id:' + process.env.clientId)
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
   usage_tip();
   // process.exit(1);
@@ -69,7 +69,7 @@ var debug = require('debug')('botkit:main');
 var bot_options = {
     clientId: process.env.clientId,
     clientSecret: process.env.clientSecret,
-    // debug: true,
+    debug: true,
     scopes: ['bot'],
     studio_token: process.env.studio_token,
     studio_command_uri: process.env.studio_command_uri
@@ -166,6 +166,10 @@ if (!process.env.clientId || !process.env.clientSecret) {
       console.log('~~~~~~~~~~');
       console.log('NOTE: Botkit Studio functionality has not been enabled');
       console.log('To enable, pass in a studio_token parameter with a token from https://studio.botkit.ai/');
+
+      controller.on('direct_mention', function(bot, message){
+        console.log('got:' + message);
+      });
   }
 }
 
