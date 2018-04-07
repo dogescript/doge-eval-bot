@@ -140,7 +140,7 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
 
   var parsed = codeParser.parseMessage(message.text);
 
-  var vmConsole = VMConsole();
+  var vmConsole = new VMConsole();
   var replyMsg = 'plz provide code block!';
   if(parsed === '')
   {
