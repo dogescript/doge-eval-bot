@@ -20,3 +20,19 @@ The bot uses the `@slack/client` module to post notifications to the channel whe
   - add hook to rebuild doge-eval-bot with latest dogescript
   - notify on redeploy with commit hash
 - notify on wakeup (post to dogebot-devel with timestamp)
+
+
+## Commands
+
+The bot supports the following commands:
+
+* `help`: displays a list of commands. TODO
+* `version`: replies with the loaded version of dogescript. TODO
+
+## Evaluation
+
+The bot evaluates dogescript code in a code block when mentioned or dm'd.
+
+The evaluation context has access to the following objects/functions:
+
+* `console.log`: logs to a console, output is returned in the format `:> ${msg}` where `${msg}` is your log message.

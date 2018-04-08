@@ -128,60 +128,29 @@ require("./skills/" + file)(controller);
 // controller.studio.before, controller.studio.after and controller.studio.validate
 
 var codeParser = require("./lib/code_parser.js");
-var VMConsole = require("./lib/vm_console.js");
+var VMExec = require("./lib/vm_exec.js");
 
 const vm = require('vm');
 const dogescript = require('dogescript');
-const backTicks = "\`\`\`"
 
-// console.log(dogescript);
-//
-// var dsParsed = dogescript('plz console.loge with \'doge\'');
-// console.log(dsParsed);
-//
-// var vmc = new VMConsole();
-// vm.runInNewContext(dsParsed,
-//   {
-//     console: vmc,
-//     timeout: 5000
-//   }
-// );
-// console.log(vmc.logMessages());
 
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:\n' + message.text);
 
-  var parsed = codeParser.parseMessage(message.text);
-  if(parsed === '')
+  console.time('msgHandle');
+  if(codeParser.isCode(message.text))
   {
+    var parsed = codeParser.parseMessage(message.text);
+    console.time('dsParse');
+    var jsCode = dogescript(parsed);
+    console.timeEnd('dsParse');
+    var execVM = new VMExec(jsCode);
+    bot.reply(message, execVM.execute());
+  }
+  else {
     bot.reply(message, 'plz provide code block!');
   }
-  else
-  {
-
-    var vmConsole = new VMConsole();
-    var jsCode = dogescript(parsed);
-    console.log('exec:\n' + jsCode);
-
-    var options = {
-        timeout: 2000 //ms
-    };
-
-    var sandbox = {
-      console: vmConsole
-    };
-
-    console.time('vmExec');
-    var result = vm.runInNewContext(jsCode,sandbox,options);
-    console.timeEnd('vmExec');
-    console.log('messages:' + vmConsole.logMessages());
-
-    var formatted = backTicks + "\n" + vmConsole.logMessages().map(s => ':> '+s).join("\n") + "\n" + result + +"\n"+ backTicks;
-
-    // todo get the result
-    bot.reply(message, formatted);
-  }
-
+  console.timeEnd('msgHandle');
 });
 
 
