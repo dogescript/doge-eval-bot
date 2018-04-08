@@ -138,7 +138,11 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:\n' + message.text);
 
   console.time('msgHandle');
-  if(codeParser.isCode(message.text))
+  if(message.text === 'version')
+  {
+    bot.reply(message, `I'm running on ${dogeVersion}.`);
+  }
+  else if(codeParser.isCode(message.text))
   {
     var parsed = codeParser.parseMessage(message.text);
     console.time('dsParse');
