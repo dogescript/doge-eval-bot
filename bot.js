@@ -120,19 +120,14 @@ require("fs").readdirSync(normalizedPath).forEach(function(file) {
 require("./skills/" + file)(controller);
 });
 
-// This captures and evaluates any message sent to the bot as a DM
-// or sent to the bot in the form "@bot message" and passes it to
-// Botkit Studio to evaluate for trigger words and patterns.
-// If a trigger is matched, the conversation will automatically fire!
-// You can tie into the execution of the script using the functions
-// controller.studio.before, controller.studio.after and controller.studio.validate
-
-var codeParser = require("./lib/code_parser.js");
-var VMExec = require("./lib/vm_exec.js");
-
+const codeParser = require("./lib/code_parser.js");
+const VMExec = require("./lib/vm_exec.js");
 const vm = require('vm');
 const dogescript = require('dogescript');
 
+const webhookNotify = require('./lib/webhook_notify.js');
+const currentTime = new Date().toTimeString();
+webhookNotify.notify(`Bot connected, it is currently ${currentTime}`);
 
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:\n' + message.text);
