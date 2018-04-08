@@ -140,7 +140,7 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.time('msgHandle');
   if(message.text === 'version')
   {
-    bot.reply(message, `I'm running on ${dogeVersion}.`);
+    bot.reply(message, `*${dogeVersion}*`);
   }
   else if(codeParser.isCode(message.text))
   {
