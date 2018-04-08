@@ -125,9 +125,14 @@ const VMExec = require("./lib/vm_exec.js");
 const vm = require('vm');
 const dogescript = require('dogescript');
 
+const dogescriptPJSON = require('./dogescript/package.json');
+const dogescriptHASH = require("fs").readFileSync('./dogescript/hash');
+const dogeVersion = dogescriptPJSON.version + '@' + dogescriptHASH;
+console.log('Doge Version:' + dogeVersion);
+
 const webhookNotify = require('./lib/webhook_notify.js');
 const currentTime = new Date().toTimeString();
-webhookNotify.notify(`Bot connected, it is currently ${currentTime}`);
+webhookNotify.notify(`\`\`\`\nBot connected.\nIt is currently ${currentTime}.\nThe dogescript version is:\n${dogeVersion}\`\`\``);
 
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:\n' + message.text);

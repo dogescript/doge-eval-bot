@@ -4,3 +4,6 @@ node_modules
 components/routes/_*
 .sass-cache/*
 package-lock.json
+
+# ignore the fetched dogescript dir
+dogescript/
