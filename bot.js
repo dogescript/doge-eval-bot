@@ -126,13 +126,13 @@ const vm = require('vm');
 const dogescript = require('dogescript');
 
 const dogescriptPJSON = require('./dogescript/package.json');
-const dogescriptHASH = require("fs").readFileSync('./dogescript/hash');
+const dogescriptHASH = require("fs").readFileSync('./dogescript/hash', 'utf8').trim();
 const dogeVersion = dogescriptPJSON.version + '@' + dogescriptHASH;
 console.log('Doge Version:' + dogeVersion);
 
 const webhookNotify = require('./lib/webhook_notify.js');
 const currentTime = new Date().toTimeString();
-webhookNotify.notify(`\`\`\`\nBot connected.\nIt is currently ${currentTime}.\nThe dogescript version is:\n${dogeVersion}\`\`\``);
+webhookNotify.notify(`\`\`\`\nBot connected.\nIt is currently ${currentTime}.\nThe dogescript version is:\n${dogeVersion}\n\`\`\``);
 
 controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.log('got:\n' + message.text);
@@ -140,7 +140,7 @@ controller.on('direct_message,direct_mention,mention', function(bot, message){
   console.time('msgHandle');
   if(message.text === 'version')
   {
-    bot.reply(message, `*${dogeVersion}*`);
+    bot.reply(message, `I\'m running on *${dogeVersion}*`);
   }
   else if(codeParser.isCode(message.text))
   {
