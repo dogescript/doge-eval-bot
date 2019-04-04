@@ -8,7 +8,7 @@
     "test": "tape ./test/*.test.js | tap-dot",
     "tape": "tape ./test/*.test.js",
     "tape:debug": "node --inspect-brk tape ./test/*.test.js",
-    "dogescript:fetch": "rm -rf dogescript && git clone https://github.com/dogescript/dogescript &&  cd dogescript/ && git rev-parse HEAD >> hash && cd ../",
+    "dogescript:fetch": "rm -rf dogescript && git clone https://github.com/dogescript/dogescript &&  cd dogescript/ && git log -1 --pretty="%h %B" >> hash && cd ../",
     "start:dev": "npm run dogescript:fetch && npm link dogescript && node bot.js"
   },
   "dependencies": {
